@@ -86,7 +86,9 @@ class StreamListener(tweepy.StreamListener):
         if status.user.screen_name in follow_list:
             print('{}: {} {}'.format(status.user.screen_name, text, status.source_url))
             tweet_url = 'https://twitter.com/{}/status/{}'.format(status.user.screen_name, status.id_str)
-            tweet_queue.append(tweet_url)
+            if len(tweet_queue) == 0 or (not (tweet_url in tweet_queue)):
+                tweet_queue.append(tweet_url)
+            print("QUEUE: ", tweet_queue)
 
     def on_error(self, status_code):
         if status_code == 420:
@@ -115,6 +117,5 @@ stream = tweepy.Stream(auth=api.auth, listener=stream_listener)
 
 
 # start_stream()
-
 
 
