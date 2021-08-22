@@ -16,10 +16,11 @@ bot = commands.Bot(command_prefix='$')
 @bot.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(bot))
+    get_tweet.start()
     await stream.start_stream()
-    await get_tweet()
+    
 
-
+@tasks.loop(seconds= 5)
 async def get_tweet():
     channel = bot.get_channel(664757315714416664)
 
